@@ -18,11 +18,11 @@ class Tag(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    price = models.IntegerField()
-    created_date = models.DateTimeField(
+    price = models.FloatField()
+    created_at = models.DateTimeField(
         auto_now_add=True
     )
-    category_id = models.ForeignKey(
+    category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
         blank=True,
@@ -30,6 +30,7 @@ class Product(models.Model):
     )
     tags = models.ManyToManyField(
         Tag,
+        blank=True
     )
 
     def __str__(self) -> str:
