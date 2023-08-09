@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  web:
+    container_name: web
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "python /usr/src/MiracleSoft/manage.py makemigrations &&
+        python /usr/src/MiracleSoft/manage.py migrate --noinput &&
+        python /usr/src/MiracleSoft/manage.py runserver 0.0.0.0:8000 "
+    volumes:
+      - .:/usr/src/MiracleSoft
+    ports:
+      - "8000:8000"
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6380:6379"
+
