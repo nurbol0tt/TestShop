@@ -1,27 +1,7 @@
 # TestShop
 
-![Project Logo](/path/to/logo.png)
-
 
 - [Installation](#installation)
-- [Configuration](#configuration)
-
-
-## Configuration
-
-Before running the project, you need to configure certain settings. Follow the instructions below:
-
-1. Rename the `.env.example` file to `.env`:
-
-   ```shell
-   mv .env.example .env
-   
-2. #### Open the .env file in a text editor and provide the necessary values for the environment variables:
-    SECRET_KEY=your_secret_key
-
-    DEBUG=True
-
-    DATABASE_URL=your_database_url
 
 
 ## Installation
