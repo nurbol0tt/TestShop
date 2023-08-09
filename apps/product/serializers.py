@@ -10,7 +10,7 @@ class TagsSerializers(serializers.ModelSerializer):
         fields = ("name",)
 
 
-class UserListSerializer(serializers.ModelSerializer):
+class ProductListSerializer(serializers.ModelSerializer):
     category = serializers.SlugRelatedField(
         slug_field="name", read_only=True
     )

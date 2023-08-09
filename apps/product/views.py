@@ -1,22 +1,18 @@
 from django.core.cache import cache
 from django.http import HttpResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
 from openpyxl.workbook import Workbook
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.product.models import Product
-from apps.product.serializers import UserListSerializer
+from apps.product.serializers import ProductListSerializer
 
 
-# Create your views here.
 class ProductListView(APIView):
-    serializer_class = UserListSerializer
+    serializer_class = ProductListSerializer
     permission_classes = (IsAuthenticated,)
 
-    @method_decorator(cache_page(60 * 5))  # Cache for 5 minutes
     def get(self, request):
         cached_products = cache.get('product_list')
 
@@ -27,10 +23,13 @@ class ProductListView(APIView):
                 .prefetch_related('tags')
             )
             serializer = self.serializer_class(queryset, many=True)
-            cache.set('product_list', serializer.data, 300)
+            cached_products = serializer.data
+            cache.set('product_list', serializer.data, 10)
         else:
-            serializer = self.serializer_class(cached_products, many=True)
-        return Response(serializer.data)
+            # Deserialize the cached data to a list of dictionaries
+            cached_products = cached_products
+
+        return Response(cached_products)
 
 
 class ExportProductsView(APIView):
